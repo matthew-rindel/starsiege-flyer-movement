@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/matthew-rindel/starsiege-flyer-movement#readme",
   "dependencies": {
-    "starsiege-math-shims": "^0.7.1",
+    "starsiege-math-shims": "^0.7.2",
     "tribes-math-library": "^1.0.0"
   }
 }
