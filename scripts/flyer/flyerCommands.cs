@@ -178,7 +178,7 @@ function flyer::doStrafe(%player, %firstJump, %value)
 		    flyer::_setCorrectAngleOnVehicle(%vehicle);
 
             %newAngle = flyer::_adjustAngle(%vehicle.currentRotationInDegrees, -45);
-            flyer::translateByRotation(%vehicle, %newAngle, %vehicle.strafing);
+            flyer::translateByRotation(%vehicle, %newAngle, %value);
         }
         schedule("flyer::doStrafe("@%player@", False, "@%value@");", $flyer::pollingRate);
 	}
@@ -275,7 +275,7 @@ function remoteFlyerAccel(%player, %action, %value)
 		return;
 	}
 
-	if (%action == "start")
+	if (%action == "start" && %vehicle.accelerating != True)
 	{
 		flyer::doAccel(%player, True, %value, say);	
 	}
@@ -294,7 +294,7 @@ function remoteFlyerJump(%player, %action, %value)
 		return;
 	}
 
-	if (%action == "start")
+	if (%action == "start" && %vehicle.jumping != True)
 	{
 	    flyer::_resetAngleOnVehicle(%vehicle);
 		flyer::doJump(%player, True, %value);	
@@ -314,8 +314,13 @@ function remoteFlyerStrafe(%player, %action, %value)
 	{
 		return;
 	}
+
+	if (%vehicle.strafing == "")
+	{
+	    %vehicle.strafing = 0;
+	}
 	
-	if (%action == "start")
+	if (%action == "start" && %vehicle.strafing == 0)
 	{
 		flyer::doStrafe(%player, True, %value);	
 	}
